@@ -15,5 +15,43 @@ module.exports = {
         return response.status(201).json({
             message: 'success'
         })
+    },
+
+    async index(request, response) {
+        const ideas = await connection('ideas').select('*').orderBy('title', 'asc')
+
+        return response.json(ideas)
+    },
+
+    async delete(request, response) {
+        const { id } = request.params
+
+        await connection('ideas').where('id', id).delete()
+
+        return response.status(204).send()
+    },
+    
+    async show(request, response){
+        const { id } = request.params
+
+        const idea = await connection('ideas').select('*').where('id', id)
+
+        return response.json(idea)
+    },
+
+    async update(request, response){
+        const { id } = request.params
+
+        //const { title, category, link_image, description, link_idea } = request.body
+        const data = request.body
+
+        await connection('ideas').where('id', id).update(data)
+
+        const idea = await connection('ideas').select('*').where('id', id)
+
+        return response.json(idea)
+        
     }
+
+    
 }
