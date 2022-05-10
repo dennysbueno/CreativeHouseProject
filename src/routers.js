@@ -8,7 +8,7 @@ const ideasController = require('./controllers/ideasController')
 router.post('/ideas', celebrate({
     [Segments.BODY]: Joi.object().keys({
         title: Joi.string().required(),
-        categoty: Joi.string().required(),
+        category: Joi.string().required(),
         link_image: Joi.string().required(),
         description: Joi.string(),
         link_idea: Joi.string().required()

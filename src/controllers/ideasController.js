@@ -18,7 +18,7 @@ module.exports = {
     },
 
     async index(request, response) {
-        const ideas = await connection('ideas').select('*').orderBy('title', 'asc')
+        const ideas = await connection('ideas').select('*').orderBy('id', 'desc')
 
         return response.json(ideas)
     },
@@ -42,16 +42,11 @@ module.exports = {
     async update(request, response){
         const { id } = request.params
 
-        //const { title, category, link_image, description, link_idea } = request.body
         const data = request.body
 
         await connection('ideas').where('id', id).update(data)
 
-        const idea = await connection('ideas').select('*').where('id', id)
-
-        return response.json(idea)
-        
-    }
-
-    
+        return response.json({message: "success"})
+   
+    }   
 }
